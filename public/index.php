@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-die(phpinfo());
+// die(phpinfo());
 
 use Laminas\Mvc\Application;
 use Laminas\Stdlib\ArrayUtils;
