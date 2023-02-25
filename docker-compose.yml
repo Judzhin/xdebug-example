@@ -1,7 +1,32 @@
+version: '3.5'
+
 services:
-  laminas:
-    build: .
-    ports:
-     - "8080:80"
+
+  php-fpm:
+    container_name: xdebug-example-php-fpm-${APP_ENV:-dev}
+    build:
+      context: .
+      target: ${APP_ENV:-dev}
+      dockerfile: .docker/php-fpm/Dockerfile
+      args:
+        APP_ENV: ${APP_ENV:-dev}
+        TZ: ${TZ:-Europe/Kiev}
     volumes:
-     - .:/var/www
+      - ./:/var/www/html:rw
+      - ~/.composer:/root/.composer/cache
+
+  nginx:
+    container_name: xdebug-example-nginx-${APP_ENV:-dev}
+    build:
+      context: .
+      target: ${APP_ENV:-dev}
+      dockerfile: .docker/nginx/Dockerfile
+      args:
+        APP_ENV: ${APP_ENV:-dev}
+    volumes:
+      - ./:/var/www/html:rw
+      - ./data/logs/nginx:/var/log/nginx:rw
+    ports:
+      - ${NGINX_PORT:-8000}:80
+    depends_on:
+      - php-fpm
