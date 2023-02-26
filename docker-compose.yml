@@ -19,4 +19,20 @@ services:
       - ${PHP_PORT:-8000}:8000
     environment:
       XDEBUG_CONFIG: 'discover_client_host=true client_host=host.docker.internal log_level=0'
-    command: 'composer serve'
+#    command: 'composer serve'
+
+  nginx:
+    container_name: xdebug-example-nginx-${APP_ENV:-dev}
+    build:
+      context: .
+      target: ${APP_ENV:-dev}
+      dockerfile: .docker/nginx/Dockerfile
+      args:
+        APP_ENV: ${APP_ENV:-dev}
+    volumes:
+      - ./:/var/www/html:rw
+      - ./data/logs/nginx:/var/log/nginx:rw
+    ports:
+      - ${NGINX_PORT:-8080}:80
+    depends_on:
+      - php-fpm
