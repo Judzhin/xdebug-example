@@ -16,7 +16,7 @@ class IndexController extends AbstractActionController
 
     public function fooAction(): ViewModel
     {
-        $var = 'he';
+        $var = 'hello world!';
         return new ViewModel();
     }
 }
