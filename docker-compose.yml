@@ -14,19 +14,6 @@ services:
     volumes:
       - ./:/var/www/html:rw
       - ~/.composer:/root/.composer/cache
-
-  nginx:
-    container_name: xdebug-example-nginx-${APP_ENV:-dev}
-    build:
-      context: .
-      target: ${APP_ENV:-dev}
-      dockerfile: .docker/nginx/Dockerfile
-      args:
-        APP_ENV: ${APP_ENV:-dev}
-    volumes:
-      - ./:/var/www/html:rw
-      - ./data/logs/nginx:/var/log/nginx:rw
     ports:
-      - ${NGINX_PORT:-8000}:80
-    depends_on:
-      - php-fpm
+      - ${PHP_PORT:-8000}:8080
+    command: 'composer serve'
