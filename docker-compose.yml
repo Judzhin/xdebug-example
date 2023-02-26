@@ -13,7 +13,10 @@ services:
         TZ: ${TZ:-Europe/Kiev}
     volumes:
       - ./:/var/www/html:rw
+      - ./.docker/php-fpm/zzz-xdebug.ini:/usr/local/etc/php/conf.d/zzz-zdebug.ini
       - ~/.composer:/root/.composer/cache
     ports:
-      - ${PHP_PORT:-8000}:8080
+      - ${PHP_PORT:-8000}:8000
+    environment:
+      XDEBUG_CONFIG: 'discover_client_host=true client_host=host.docker.internal log_level=0'
     command: 'composer serve'

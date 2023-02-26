@@ -41,7 +41,7 @@
         ],
         "post-install-cmd": "@clear-config-cache",
         "post-update-cmd": "@clear-config-cache",
-        "serve": "php -S 0.0.0.0:8080 -t public",
+        "serve": "php -S 0.0.0.0:8000 -t public",
         "test": "vendor/bin/phpunit",
         "static-analysis": "vendor/bin/psalm --shepherd --stats"
     },
